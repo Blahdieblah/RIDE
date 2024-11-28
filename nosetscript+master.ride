@@ -1,0 +1,18 @@
+{-# STDLIB_VERSION 6 #-}
+{-# CONTENT_TYPE DAPP #-}
+{-# SCRIPT_TYPE ACCOUNT #-}
+{-# IMPORT artifacts/mainnet.ride #-}
+
+
+let masterPubKey = fromBase58String("Fie81vAdJpfXEwD1KedZuYHLRNV5qr6SW8gQnC4N4bpa")
+
+@Verifier(tx)
+func verify() =
+{
+    match (tx) {
+    case t: SetScriptTransaction => false
+    case _ => sigVerify_16Kb(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)
+}      
+  || 
+  sigVerify_16Kb(tx.bodyBytes, tx.proofs[0], masterPubKey)
+}
