@@ -1,0 +1,11 @@
+{-# STDLIB_VERSION 6 #-}
+{-# CONTENT_TYPE DAPP #-}
+{-# SCRIPT_TYPE ACCOUNT #-}
+
+let masterPubKey = fromBase58String("Fie81vAdJpfXEwD1KedZuYHLRNV5qr6SW8gQnC4N4bpa")
+
+@Verifier(tx)
+func verify() =
+{
+  sigVerify_16Kb(tx.bodyBytes, tx.proofs[0], masterPubKey)
+}
